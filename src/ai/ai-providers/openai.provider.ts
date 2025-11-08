@@ -62,7 +62,6 @@ export function prepareOpenAiRequest(
  * Prepares request for OpenAI Embeddings
  */
 export function prepareOpenAiEmbeddingsRequest(body: any, modelId?: string) {
-  console.log(body);
   if (!body.input) throw new Error('OpenAI embeddings require `input`');
   const model = body.model ?? modelId;
   if (!model) throw new Error('OpenAI embeddings require `model`');

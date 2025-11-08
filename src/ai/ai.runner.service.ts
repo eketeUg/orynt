@@ -12,7 +12,7 @@ export class AiRunnerService {
   constructor(private readonly http: HttpService) {}
 
   async runModel(modelId: string, feature: string, body: any): Promise<any> {
-    console.log(body);
+    // console.log(body);
     const config: ModelConfig = ModelRegistry[modelId];
     if (!config) throw new BadRequestException(`Invalid model: ${modelId}`);
 
