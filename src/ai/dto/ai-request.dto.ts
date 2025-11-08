@@ -1,20 +1,51 @@
-import { IsString, IsNotEmpty, IsArray, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsOptional,
+  IsArray,
+  ValidateNested,
+  IsNumber,
+  Min,
+  Max,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
+class MessageDto {
+  @IsString()
+  role: 'user' | 'assistant' | 'system';
+
+  @IsString()
+  content: string;
+}
 
 export class AiRequestDto {
   @IsString()
-  @IsNotEmpty()
   model: string;
 
+  @IsOptional()
+  @IsString({ each: false })
+  input?: string | string[];
+
+  @IsOptional()
   @IsArray()
-  @IsOptional()
-  messages?: any[];
+  @ValidateNested({ each: true })
+  @Type(() => MessageDto)
+  messages?: MessageDto[];
 
   @IsOptional()
-  input?: any;
+  @IsNumber()
+  @Min(0)
+  @Max(2)
+  temperature?: number;
 
   @IsOptional()
-  prompt?: any;
+  @IsNumber()
+  max_tokens?: number;
 
-  // allow flexible structure for multimodal
+  @IsOptional()
+  stop?: string | string[];
+
+  /**
+   * Allows provider-specific extra fields, e.g., OpenAI, Anthropic, Grok, Gradient
+   */
   [key: string]: any;
 }
