@@ -5,6 +5,7 @@ import {
   Min,
   Max,
   IsUrl,
+  ValidateIf,
 } from 'class-validator';
 
 // ====== Chat DTO ======
@@ -13,7 +14,18 @@ export class ChatDto {
   model: string;
 
   @IsString()
-  prompt: string;
+  @IsOptional()
+  prompt?: string;
+
+  @IsOptional()
+  @ValidateIf(
+    (o) => typeof o.messages === 'string' || Array.isArray(o.messages),
+  )
+  messages?: string | any[];
+
+  @IsOptional()
+  @ValidateIf((o) => typeof o.input === 'string' || Array.isArray(o.input))
+  input?: string | any[];
 
   @IsOptional()
   @IsNumber()

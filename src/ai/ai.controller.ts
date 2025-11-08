@@ -15,8 +15,13 @@ export class AiController {
   // ====== Chat / Completion ======
   @Post('chat')
   async chat(@Body() dto: ChatDto) {
+    const input =
+      dto.input ??
+      dto.messages ??
+      (dto.prompt ? [{ role: 'user', content: dto.prompt }] : []);
+
     const body = {
-      input: [{ role: 'user', content: dto.prompt }],
+      input,
       temperature: dto.temperature ?? 0.7,
       max_tokens: dto.max_tokens ?? 1024,
       ...dto.options,

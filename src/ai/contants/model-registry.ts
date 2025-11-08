@@ -1,4 +1,5 @@
 import { prepareAnthropicRequest } from '../ai-providers/anthropic.provider';
+import { prepareGradientRequest } from '../ai-providers/gradient.provider';
 import { prepareGrokRequest } from '../ai-providers/grok.provider';
 import {
   prepareOpenAiEmbeddingsRequest,
@@ -127,5 +128,40 @@ export const ModelRegistry: Record<string, ModelConfig> = {
     provider: 'openai',
     endpoints: { images: 'https://api.openai.com/v1/images/generations' },
     prepare: { images: prepareOpenAiImageRequest },
+  },
+
+  // ========== Gradient network Models ==========
+
+  'qwen/qwen3-coder-480b-instruct-fp8': {
+    provider: 'gradient',
+    endpoints: {
+      chat: 'https://apis.gradient.network/api/v1/ai/chat/completions',
+      models: 'https://apis.gradient.network/api/v1/ai/models',
+    },
+    prepare: {
+      chat: prepareGradientRequest,
+    },
+  },
+
+  'qwen/qwen3-coder-480b-instruct-fp8-free': {
+    provider: 'gradient',
+    endpoints: {
+      chat: 'https://apis.gradient.network/api/v1/ai/chat/completions',
+      models: 'https://apis.gradient.network/api/v1/ai/models',
+    },
+    prepare: {
+      chat: prepareGradientRequest,
+    },
+  },
+
+  'openai/gpt-oss-120b-free': {
+    provider: 'gradient',
+    endpoints: {
+      chat: 'https://apis.gradient.network/api/v1/ai/chat/completions',
+      models: 'https://apis.gradient.network/api/v1/ai/models',
+    },
+    prepare: {
+      chat: prepareGradientRequest,
+    },
   },
 };
