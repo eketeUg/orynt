@@ -1,0 +1,66 @@
+####################################################################
+# Chat Completions
+####################################################################
+POST http://localhost:3000/ai/chat
+Accept: application/json
+Content-Type: application/json
+
+{
+  "model": "gpt-4.1",
+  "prompt": "Explain Solana in one sentence."
+}
+
+###
+
+####################################################################
+#  Get Supported Models
+####################################################################
+GET http://localhost:3000/ai/models
+Accept: application/json
+
+###
+
+####################################################################
+#  Embeddings
+####################################################################
+POST http://localhost:3000/ai/embeddings
+Accept: application/json
+Content-Type: application/json
+
+{
+  "model": "text-embedding-3-small",
+  "text": "Hello world"
+}
+
+###
+
+####################################################################
+# Image Generation
+####################################################################
+POST http://localhost:3000/ai/images
+Accept: application/json
+Content-Type: application/json
+
+{
+  "model": "dall-e-3",
+  "prompt": "A futuristic city skyline at sunset",
+  "n": 1,
+  "width": 1024,
+  "height": 1024
+}
+
+###
+
+####################################################################
+# 5️⃣ Text-to-Speech (TTS)
+####################################################################
+POST http://localhost:3000/ai/tts
+Accept: application/json
+Content-Type: application/json
+
+{
+  "model": "gpt-4o-mini-tts",
+  "text": "Hello, welcome to X402 AI service.",
+  "voice": "alloy",
+  "format": "mp3"
+}
