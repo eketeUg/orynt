@@ -16,7 +16,7 @@ async function bootstrap() {
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Orynt API')
-    .setDescription('API documentation for the Discreet application')
+    .setDescription('API documentation for the Orynt x402 ai api wrapper')
     .setVersion('1.0')
     .addServer(
       NODE_ENV === 'production'
