@@ -1,7 +1,7 @@
 ####################################################################
 # Chat Completions
 ####################################################################
-POST http://localhost:3000/ai/chat
+POST http://localhost:3000/api/v1/ai/chat
 Accept: application/json
 Content-Type: application/json
 
@@ -15,7 +15,7 @@ Content-Type: application/json
 ####################################################################
 #  Get Supported Models
 ####################################################################
-GET http://localhost:3000/ai/models
+GET http://localhost:3000/api/v1/ai/models
 Accept: application/json
 
 ###
@@ -23,7 +23,7 @@ Accept: application/json
 ####################################################################
 #  Embeddings
 ####################################################################
-POST http://localhost:3000/ai/embeddings
+POST http://localhost:3000/api/v1/ai/embeddings
 Accept: application/json
 Content-Type: application/json
 
@@ -37,7 +37,7 @@ Content-Type: application/json
 ####################################################################
 # Image Generation
 ####################################################################
-POST http://localhost:3000/ai/images
+POST http://localhost:3000/api/v1/ai/images
 Accept: application/json
 Content-Type: application/json
 
@@ -54,7 +54,7 @@ Content-Type: application/json
 ####################################################################
 # 5️⃣ Text-to-Speech (TTS)
 ####################################################################
-POST http://localhost:3000/ai/tts
+POST http://localhost:3000/api/v1/ai/tts
 Accept: application/json
 Content-Type: application/json
 

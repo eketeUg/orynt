@@ -7,6 +7,7 @@ import {
   SttDto,
   TtsDto,
 } from './dto/ai-request.dto';
+import { ApiBody, ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
 
 @Controller('ai')
 export class AiController {
@@ -14,6 +15,9 @@ export class AiController {
 
   // ====== Chat / Completion ======
   @Post('chat')
+  @ApiOperation({ summary: 'Run a chat model' })
+  @ApiBody({ type: ChatDto })
+  @ApiResponse({ status: 200, description: 'Chat response from AI model' })
   async chat(@Body() dto: ChatDto) {
     const input =
       dto.input ??
@@ -31,6 +35,9 @@ export class AiController {
 
   // ====== Embeddings ======
   @Post('embeddings')
+  @ApiOperation({ summary: 'Generate embeddings from text' })
+  @ApiBody({ type: EmbeddingDto })
+  @ApiResponse({ status: 200, description: 'Embedding vector' })
   async embeddings(@Body() dto: EmbeddingDto) {
     const body = { input: dto.text, ...dto.options };
     return this.ai.runModel(dto.model, 'embeddings', body);
@@ -38,6 +45,9 @@ export class AiController {
 
   // ====== Image Generation ======
   @Post('images')
+  @ApiOperation({ summary: 'Generate images from prompt' })
+  @ApiBody({ type: ImageDto })
+  @ApiResponse({ status: 200, description: 'Generated images' })
   async generateImages(@Body() dto: ImageDto) {
     const body = {
       prompt: dto.prompt,
@@ -50,6 +60,9 @@ export class AiController {
 
   // ====== Speech-to-Text (STT) ======
   @Post('stt')
+  @ApiOperation({ summary: 'Transcribe audio to text' })
+  @ApiBody({ type: SttDto })
+  @ApiResponse({ status: 200, description: 'Transcribed text' })
   async transcribe(@Body() dto: SttDto) {
     const body = { file_url: dto.audioUrl, ...dto.options }; // depends on provider
     return this.ai.runModel(dto.model, 'stt', body);
@@ -57,6 +70,9 @@ export class AiController {
 
   // ====== Text-to-Speech (TTS) ======
   @Post('tts')
+  @ApiOperation({ summary: 'Convert text to speech' })
+  @ApiBody({ type: TtsDto })
+  @ApiResponse({ status: 200, description: 'Generated speech/audio file' })
   async tts(@Body() dto: TtsDto) {
     const body = { input: dto.text, voice: dto.voice ?? 'alloy' };
     return this.ai.runModel(dto.model, 'tts', body);
@@ -64,6 +80,13 @@ export class AiController {
 
   // ====== Model Listing ======
   @Get('models')
+  @ApiOperation({ summary: 'List all available AI models' })
+  @ApiQuery({
+    name: 'provider',
+    required: false,
+    description: 'Filter models by provider',
+  })
+  @ApiResponse({ status: 200, description: 'List of AI models' })
   async listModels(@Query('provider') provider?: string) {
     // If provider is specified, filter models by provider
     const allModels = Object.entries(this.ai.getAllModels()).map(
