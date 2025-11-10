@@ -57,6 +57,7 @@ export class X402Service {
     await new Promise<void>((resolve) => {
       middleware(req, res, async () => {
         const header = req.headers['x-payment'];
+        console.log(req);
         if (!header) throw new Error('No X-PAYMENT header');
         const payerAddress = this.extractActualPayer(header);
         req.x402 = { payerAddress };
