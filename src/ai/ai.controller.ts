@@ -88,6 +88,7 @@ export class AiController {
   })
   @ApiResponse({ status: 200, description: 'List of AI models' })
   async listModels(@Query('provider') provider?: string) {
+    return this.ai.testSDK();
     // If provider is specified, filter models by provider
     const allModels = Object.entries(this.ai.getAllModels()).map(
       ([id, config]) => ({
