@@ -11,11 +11,11 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get("/premium")
+  @Get('/premium')
   @Paywall({
     amount: 10000, // $0.01 in USDC base units
-    resource: "https://myapi.com",
-    description: "Premium API access",
+    resource: 'https://myapi.com',
+    description: 'Premium API access',
   })
   getHelloPremium(): string {
     return this.appService.getHello();
