@@ -12,6 +12,7 @@ export class X402Guard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const config = this.reflector.get(PAYWALL_METADATA, context.getHandler());
+    config.amount = 10000;
     if (!config) return true;
 
     const req = context.switchToHttp().getRequest();
