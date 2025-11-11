@@ -18,14 +18,7 @@ async function bootstrap() {
     .setTitle('Orynt API')
     .setDescription('API documentation for the Orynt x402 ai api wrapper')
     .setVersion('1.0')
-    .addServer(
-      NODE_ENV === 'production'
-        ? process.env.PROD_URL || ''
-        : `http://localhost:${PORT}`,
-      NODE_ENV === 'production'
-        ? 'Production Server'
-        : 'Local Development Server',
-    )
+    .addServer("https://api.oryntai.xyz/api/v1", "Base URL")
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
