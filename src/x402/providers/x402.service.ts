@@ -60,7 +60,9 @@ export class X402Service {
         const header = req.headers['x-payment'];
 
         if (!header) throw new Error('No X-PAYMENT header');
+
         const payerAddress = this.extractActualPayer(header);
+
         req.x402 = { payerAddress };
         verified = true;
         resolve();
@@ -72,9 +74,11 @@ export class X402Service {
   private extractActualPayer(header: string): string {
     try {
       const decoded = Buffer.from(header, 'base64').toString('utf-8');
+
       const json = JSON.parse(decoded);
 
       const txBase64 = json?.payload?.transaction;
+      console.log(txBase64);
       if (!txBase64) throw new Error('No transaction in payload');
 
       const txBuffer = Buffer.from(txBase64, 'base64');

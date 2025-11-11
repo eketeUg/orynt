@@ -4,6 +4,6 @@ import { X402Guard } from './guards/x402.guard';
 
 @Module({
   providers: [X402Service, X402Guard],
-  exports: [X402Service, X402Guard]
+  exports: [X402Service, X402Guard],
 })
-export class X402Module { }
+export class X402Module {}

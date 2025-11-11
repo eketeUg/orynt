@@ -106,21 +106,19 @@ export class AiController {
   })
   @ApiResponse({ status: 200, description: 'List of AI models' })
   async listModels(@Query('provider') provider?: string) {
-    return this.ai.testSDK();
-
     // If provider is specified, filter models by provider
 
-    //   const allModels = Object.entries(this.ai.getAllModels()).map(
-    //     ([id, config]) => ({
-    //       id,
-    //       provider: config.provider,
-    //       features: Object.keys(config.endpoints),
-    //     }),
-    //   );
+    const allModels = Object.entries(this.ai.getAllModels()).map(
+      ([id, config]) => ({
+        id,
+        provider: config.provider,
+        features: Object.keys(config.endpoints),
+      }),
+    );
 
-    //   if (provider) {
-    //     return allModels.filter((m) => m.provider === provider.toLowerCase());
-    //   }
-    //   return allModels;
+    if (provider) {
+      return allModels.filter((m) => m.provider === provider.toLowerCase());
+    }
+    return allModels;
   }
 }
