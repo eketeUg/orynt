@@ -17,11 +17,6 @@ export class AppController {
 
   @Get('/premium')
   @Paywall({
-<<<<<<< HEAD
-    amount: 10000, // $0.01 in USDC base units
-    resource: 'https://myapi.com',
-=======
->>>>>>> X402
     description: 'Premium API access',
   })
   async getHelloPremium(@Req() req: any): Promise<string> {
@@ -38,3 +33,5 @@ export class AppController {
   }
 }
 // amount: 10000, // $0.01 in USDC base units
+// amount: 10000, // $0.01 in USDC base units
+// resource: 'https://myapi.com',

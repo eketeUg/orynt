@@ -1,56 +1,3 @@
-<<<<<<< HEAD
-import { Injectable } from '@nestjs/common';
-import { paymentMiddleware } from 'x402-express';
-
-export interface PaywallConfig {
-  amount: number; // kept for compatibility with your decorator
-  resource: string;
-  description?: string;
-}
-
-@Injectable()
-export class X402Service {
-  async verifyPayment(
-    req: any,
-    res: any,
-    config: PaywallConfig,
-  ): Promise<boolean> {
-    const FACILITATOR_URL =
-      process.env.FACILITATOR_URL || 'https://facilitator.payai.network';
-    const WALLET_ADDRESS =
-      process.env.WALLET_ADDRESS ||
-      'CEBAqJoQXomRdMubgTWL1fa99d2zr2rFTMPukk62fSUw';
-    const NETWORK = process.env.NETWORK || 'solana-devnet';
-
-    let verified = false;
-
-    const middleware = paymentMiddleware(
-      WALLET_ADDRESS,
-      {
-        [req.route.path]: {
-          price: `$${(config.amount || 10000) / 1_000_000}`, // convert USDC base units to human-readable
-          network: NETWORK,
-          config: {
-            description: config.description || 'Premium API access',
-          },
-        },
-      },
-      {
-        url: FACILITATOR_URL,
-      },
-    );
-
-    // Run the middleware inline
-    await new Promise<void>((resolve) => {
-      middleware(req, res, () => {
-        verified = true;
-        resolve();
-      });
-    });
-
-    return verified;
-  }
-=======
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { paymentMiddleware } from 'x402-express';
@@ -74,7 +21,8 @@ import {
 
 @Injectable()
 export class X402Service {
-  private NETWORK = process.env.NETWORK || 'solana-devnet';
+  // private NETWORK = process.env.NETWORK || 'solana-devnet';
+  private NETWORK;
   private PRIVATEKEY = process.env.PRIVATE_KEY;
 
   async verifyPayment(
@@ -82,11 +30,11 @@ export class X402Service {
     res: any,
     config: PaywallConfig,
   ): Promise<boolean> {
+    this.NETWORK = config.network || 'solana-devnet';
+
     const FACILITATOR_URL =
       process.env.FACILITATOR_URL || 'https://facilitator.payai.network';
-    const WALLET_ADDRESS =
-      process.env.WALLET_ADDRESS ||
-      'CEBAqJoQXomRdMubgTWL1fa99d2zr2rFTMPukk62fSUw';
+    const WALLET_ADDRESS = this.getWalletAddress(this.NETWORK);
 
     let verified = false;
 
@@ -110,7 +58,7 @@ export class X402Service {
     await new Promise<void>((resolve) => {
       middleware(req, res, async () => {
         const header = req.headers['x-payment'];
-        console.log(req);
+
         if (!header) throw new Error('No X-PAYMENT header');
         const payerAddress = this.extractActualPayer(header);
         req.x402 = { payerAddress };
@@ -219,5 +167,21 @@ export class X402Service {
       throw new Error(`USDC transfer failed: ${error.message}`);
     }
   }
->>>>>>> X402
+
+  private getWalletAddress(network: string) {
+    const SOLANA_WALLET =
+      process.env.SOLANA_WALLET_ADDRESS ||
+      'CEBAqJoQXomRdMubgTWL1fa99d2zr2rFTMPukk62fSUw';
+
+    const EVM_WALLET =
+      process.env.EVM_WALLET_ADDRESS ||
+      '0x2189878C4963B84Fd737640db71D7650214c4A18';
+
+    // Normalize and check if network string contains "solana"
+    if (network.toLowerCase().includes('solana')) {
+      return SOLANA_WALLET;
+    }
+
+    return EVM_WALLET;
+  }
 }

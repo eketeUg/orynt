@@ -6,10 +6,17 @@ import {
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { ModelConfig, ModelRegistry } from './contants/model-registry';
+import { Orynt } from '@orynt/ai-x402';
 
 @Injectable()
 export class AiRunnerService {
-  constructor(private readonly http: HttpService) {}
+  Orynt: Orynt;
+  constructor(private readonly http: HttpService) {
+    this.Orynt = new Orynt({
+      baseUrl: 'http://localhost:3000/api/v1',
+      network: 'base-sepolia',
+    });
+  }
 
   async runModel(modelId: string, feature: string, body: any): Promise<any> {
     // console.log(body);
@@ -62,5 +69,18 @@ export class AiRunnerService {
 
   getAllModels(): Record<string, ModelConfig> {
     return ModelRegistry;
+  }
+
+  async testSDK(): Promise<any> {
+    try {
+      const response = await this.Orynt.chat({
+        model: 'gpt-4.1',
+        prompt: 'helloe',
+      });
+
+      return response;
+    } catch (error) {
+      return error.message;
+    }
   }
 }

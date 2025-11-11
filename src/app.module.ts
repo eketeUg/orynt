@@ -13,8 +13,8 @@ import { AiModule } from './ai/ai.module';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: X402Guard
-    }
+      useClass: X402Guard,
+    },
   ],
 })
-export class AppModule { }
+export class AppModule {}

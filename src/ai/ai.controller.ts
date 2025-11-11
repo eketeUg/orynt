@@ -8,6 +8,8 @@ import {
   TtsDto,
 } from './dto/ai-request.dto';
 import { ApiBody, ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
+import { Paywall } from 'src/x402/decorators/paywall.decorator';
+import { NoPaywall } from 'src/x402/decorators/no-paywall.decorator';
 
 @Controller('ai')
 export class AiController {
@@ -15,6 +17,9 @@ export class AiController {
 
   // ====== Chat / Completion ======
   @Post('chat')
+  @Paywall({
+    description: 'Run ai chat model',
+  })
   @ApiOperation({ summary: 'Run a chat model' })
   @ApiBody({ type: ChatDto })
   @ApiResponse({ status: 200, description: 'Chat response from AI model' })
@@ -35,6 +40,9 @@ export class AiController {
 
   // ====== Embeddings ======
   @Post('embeddings')
+  @Paywall({
+    description: 'generate text embeddings',
+  })
   @ApiOperation({ summary: 'Generate embeddings from text' })
   @ApiBody({ type: EmbeddingDto })
   @ApiResponse({ status: 200, description: 'Embedding vector' })
@@ -45,6 +53,9 @@ export class AiController {
 
   // ====== Image Generation ======
   @Post('images')
+  @Paywall({
+    description: 'Generate images',
+  })
   @ApiOperation({ summary: 'Generate images from prompt' })
   @ApiBody({ type: ImageDto })
   @ApiResponse({ status: 200, description: 'Generated images' })
@@ -60,6 +71,9 @@ export class AiController {
 
   // ====== Speech-to-Text (STT) ======
   @Post('stt')
+  @Paywall({
+    description: 'Transcribe audio to text',
+  })
   @ApiOperation({ summary: 'Transcribe audio to text' })
   @ApiBody({ type: SttDto })
   @ApiResponse({ status: 200, description: 'Transcribed text' })
@@ -70,6 +84,9 @@ export class AiController {
 
   // ====== Text-to-Speech (TTS) ======
   @Post('tts')
+  @Paywall({
+    description: 'Convert text to speech',
+  })
   @ApiOperation({ summary: 'Convert text to speech' })
   @ApiBody({ type: TtsDto })
   @ApiResponse({ status: 200, description: 'Generated speech/audio file' })
@@ -80,6 +97,7 @@ export class AiController {
 
   // ====== Model Listing ======
   @Get('models')
+  @NoPaywall()
   @ApiOperation({ summary: 'List all available AI models' })
   @ApiQuery({
     name: 'provider',
@@ -88,18 +106,21 @@ export class AiController {
   })
   @ApiResponse({ status: 200, description: 'List of AI models' })
   async listModels(@Query('provider') provider?: string) {
-    // If provider is specified, filter models by provider
-    const allModels = Object.entries(this.ai.getAllModels()).map(
-      ([id, config]) => ({
-        id,
-        provider: config.provider,
-        features: Object.keys(config.endpoints),
-      }),
-    );
+    return this.ai.testSDK();
 
-    if (provider) {
-      return allModels.filter((m) => m.provider === provider.toLowerCase());
-    }
-    return allModels;
+    // If provider is specified, filter models by provider
+
+    //   const allModels = Object.entries(this.ai.getAllModels()).map(
+    //     ([id, config]) => ({
+    //       id,
+    //       provider: config.provider,
+    //       features: Object.keys(config.endpoints),
+    //     }),
+    //   );
+
+    //   if (provider) {
+    //     return allModels.filter((m) => m.provider === provider.toLowerCase());
+    //   }
+    //   return allModels;
   }
 }

@@ -29,7 +29,7 @@ Content-Type: application/json
 
 {
   "model": "text-embedding-3-small",
-  "text": "Hello world"
+  "text": "hello"
 }
 
 ###
