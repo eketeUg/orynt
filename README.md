@@ -1,6 +1,7 @@
 [![npm version](https://img.shields.io/npm/v/@orynt/ai-x402.svg)](https://www.npmjs.com/package/@orynt/ai-x402)
 [![API Status](https://img.shields.io/website?url=https%3A%2F%2Fapi.oryntai.xyz/api/v1/docs&label=api.oryntai.xyz/api/v1/docs)](https://api.oryntai.xyz/api/v1/docs)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
 # 🧠 ORYNT — Unified AI API with x402 Payments
 
@@ -104,3 +105,4 @@ await ai.generateImage({
 - 📦 **NPM Package:** [@orynt/ai-x402](https://www.npmjs.com/package/@orynt/ai-x402)
 - 🌐 **Public API Endpoint:** [https://api.oryntai.xyz/api/v1/docs](https://api.oryntai.xyz/api/v1/docs)
 - 🏠 **Project Homepage:** [https://www.oryntai.xyz/](https://www.oryntai.xyz/)
+- 💻 **SDK Repository:** [github.com/eketeUg/orynt-x402-sdk](https://github.com/eketeUg/orynt-x402-sdk)
