@@ -1,85 +1,106 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+[![npm version](https://img.shields.io/npm/v/@orynt/ai-x402.svg)](https://www.npmjs.com/package/@orynt/ai-x402)
+[![API Status](https://img.shields.io/website?url=https%3A%2F%2Fapi.oryntai.xyz/api/v1/docs&label=api.oryntai.xyz/api/v1/docs)](https://api.oryntai.xyz/api/v1/docs)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# 🧠 ORYNT — Unified AI API with x402 Payments
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Pay-as-you-use AI model wrapper — ORYNT connects developers to multiple AI models (chat, image, code, and more) through a single API, powered by the x402 micropayment protocol.
 
-## Description
+## 🚀 Overview
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+ORYNT is an open AI infrastructure layer that simplifies how you access and pay for AI services.
 
-## Project setup
+- 🌐 Unified API for major AI providers (OpenAI, Gradient Network, etc.)
+- 💸 x402 Pay-as-you-use billing — no subscriptions or API key management
+- 🧩 Lightweight SDK (@orynt/ai-x402) for instant integration
+- 🔒 Secure endpoints with transparent usage tracking
 
-```bash
-$ pnpm install
+## 🧩 Architecture
+
+```
+Client (Frontend / SDK)
+        ↓
+    ORYNT API Gateway
+        ↓
+  AI Provider (OpenAI, Gradient Network etc.)
+        ↓
+   x402 Payment Layer
 ```
 
-## Compile and run the project
+## ORYNT acts as a universal AI gateway — developers send a request once, ORYNT handles:
+
+- Provider selection,
+- Model routing,
+- Payment verification (via x402),
+- And response delivery.
+
+## 💳 Pay-as-you-Use with x402
+
+ORYNT integrates x402, a decentralized payment standard for API metering.
+Instead of monthly subscriptions, users pay per request, in real-time.
+
+### 🔁 Flow
+
+1. Your SDK or client attaches an x402 payment signature.
+2. ORYNT validates it before forwarding to the AI model.
+3. The request is executed and the response is returned instantly.
+
+### Supported Models
+
+| Model                                     | Provider         | features                                                                 |
+| ----------------------------------------- | ---------------- | ------------------------------------------------------------------------ |
+| `gpt-4.1`                                 | Openai           | `chat`,`embeddings`,`image generation`,`speech-to-text`,`text-to-speech` |
+| `gpt-4o-mini`                             | Openai           | `chat`,`embeddings`,`image generation`,`speech-to-text`,`text-to-speech` |
+| `gpt-3.5-turbo`                           | Openai           | `chat`                                                                   |
+| `o1-mini`                                 | Openai           | `chat`                                                                   |
+| `text-embedding-3-small`                  | Openai           | `embeddings`                                                             |
+| `whisper-1`                               | Openai           | `speech-to-text`                                                         |
+| `gpt-4o-mini-tts`                         | Openai           | `text-to-speech`                                                         |
+| `dall-e-3`                                | Openai           | `image-generation`                                                       |
+| `qwen/qwen3-coder-480b-instruct-fp8`      | Gradient-network | `chat`                                                                   |
+| `qwen/qwen3-coder-480b-instruct-fp8-free` | Gradient-network | `chat`                                                                   |
+| `openai/gpt-oss-120b-free`                | Gradient-network | `chat`                                                                   |
+
+## Supported Networks
+
+| Network         |
+| --------------- |
+| `solana`        |
+| `solana-devnet` |
+| `base`          |
+| `base-sepolia`  |
+| `polygon`       |
+| `polygon-amoy`  |
+
+## 🚀 Installation
 
 ```bash
-# development
-$ pnpm run start
-
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
+npm add @orynt/ai-x402
 ```
 
-## Run tests
+## Basic Usage
 
-```bash
-# unit tests
-$ pnpm run test
+provide a PRIVATE_KEY=...walletPrivate in your .env
 
-# e2e tests
-$ pnpm run test:e2e
+```typescript
+import { Orynt } from '@orynt/ai-x402';
 
-# test coverage
-$ pnpm run test:cov
+const ai = new Orynt({
+  baseUrl: 'https://api.oryntai.xyz/api/v1',
+  network: 'solana-devnet',
+});
+
+await ai.generateImage({
+  model: 'dall-e-3',
+  prompt: 'A futuristic city skyline at sunset',
+  n: 1,
+  width: 1024,
+  height: 1024,
+});
 ```
 
-## Resources
+### 🔗 Useful Links
 
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- 📦 **NPM Package:** [@orynt/ai-x402](https://www.npmjs.com/package/@orynt/ai-x402)
+- 🌐 **Public API Endpoint:** [https://api.oryntai.xyz/api/v1/docs](https://api.oryntai.xyz/api/v1/docs)
+- 🏠 **Project Homepage:** [https://www.oryntai.xyz/](https://www.oryntai.xyz/)

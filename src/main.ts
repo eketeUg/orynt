@@ -8,7 +8,6 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const PORT = process.env.PORT || 3000;
-  const NODE_ENV = process.env.NODE_ENV || 'development';
 
   app.enableCors();
 
@@ -18,7 +17,7 @@ async function bootstrap() {
     .setTitle('Orynt API')
     .setDescription('API documentation for the Orynt x402 ai api wrapper')
     .setVersion('1.0')
-    .addServer("https://api.oryntai.xyz/", "Base URL")
+    .addServer('https://api.oryntai.xyz/', 'Base URL')
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);

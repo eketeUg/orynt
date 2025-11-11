@@ -37,7 +37,7 @@ Content-Type: application/json
 ####################################################################
 # Image Generation
 ####################################################################
-POST http://localhost:3000/api/v1/ai/images
+POST https://api.oryntai.xyz/api/v1/ai/images
 Accept: application/json
 Content-Type: application/json
 
