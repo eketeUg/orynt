@@ -3,6 +3,8 @@ import { SetMetadata } from '@nestjs/common';
 export const PAYWALL_METADATA = 'paywall_metadata';
 
 export type SupportedNetwork =
+  | 'avalanche'
+  | 'avalanche-fuji'
   | 'base'
   | 'base-sepolia'
   | 'solana'
